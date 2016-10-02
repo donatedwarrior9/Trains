@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AIPLayerPanel : MonoBehaviour {
+public class AI_PlayerPanel : MonoBehaviour {
     public GameObject[] buttons;
      
 	// Use this for initialization
 	void Start () {
-        switch (GameManager.NumHumanPLayers)
+        switch (GameManager.NumHumanPlayers)
         {
             case 1:
                 break;
@@ -36,9 +36,9 @@ public class AIPLayerPanel : MonoBehaviour {
 	
 	}
 
-    public void SetAIPlayer(int i)
+    public void SetAI_Player(int i)
     {
-        GameManager.NumAIPLayers = i;
+        GameManager.NumAI_Players = i;
         UnityEngine.SceneManagement.SceneManager.LoadScene("main scene");
         
     }

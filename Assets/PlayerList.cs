@@ -10,7 +10,7 @@ public class PlayerInfo
     int cards = 0;
     int points = 0;
     int trainCars = 0;
-    public Color PLayerColor = Color.white;
+    public Color playerColor = Color.white;
 }
 
 
@@ -19,26 +19,26 @@ public class PlayerList : MonoBehaviour {
 
     // Holds all Player info 
     // Populates this at start of game
-    public static PlayerInfo[] PlayerInfos;
+    public static PlayerInfo[] playerInfos;
     
     public GameObject[] playerEntries;
     
 
    //----------------------------------------------------------------------------------------------------------------------------
-	// Assumes GameManager.NumHumanPlayers and NumAIPlayers is already set
+	// Assumes GameManager.NumHumanPlayers and NumAI_Players is already set
 	void Start () {
 
         // Sets number of PlayerInfos 
-        PlayerInfos = new PlayerInfo[GameManager.NumHumanPLayers + GameManager.NumAIPLayers];
+        playerInfos = new PlayerInfo[GameManager.NumHumanPlayers + GameManager.NumAI_Players];
 
         // Orders human players and bot players
         for (int i = 0; i < playerEntries.Length; i++)
         {
-            if (i < GameManager.NumHumanPLayers)
+            if (i < GameManager.NumHumanPlayers)
                 SetupLabel(playerEntries[i], i, false);
 
-            else if (i < GameManager.NumHumanPLayers + GameManager.NumAIPLayers)
-                SetupLabel(playerEntries[i], i+GameManager.NumAIPLayers, true);
+            else if (i < GameManager.NumHumanPlayers + GameManager.NumAI_Players)
+                SetupLabel(playerEntries[i], i+GameManager.NumAI_Players, true);
 
             else
                 playerEntries[i].SetActive(false);
@@ -49,7 +49,7 @@ public class PlayerList : MonoBehaviour {
     void SetupLabel(GameObject label, int playerNumber, bool isBot)
     {
         // Creates new PlayerInfo struct to represent that particular player
-        PlayerInfos[playerNumber] = new PlayerInfo();
+        playerInfos[playerNumber] = new PlayerInfo();
 
         
         // UI Stuff
@@ -60,8 +60,8 @@ public class PlayerList : MonoBehaviour {
 
 
         // Initializes player color.
-        PlayerInfos[playerNumber].PLayerColor = label.GetComponent<Image>().color;
-        PlayerInfos[playerNumber].isHuman = !isBot;
+        playerInfos[playerNumber].playerColor = label.GetComponent<Image>().color;
+        playerInfos[playerNumber].isHuman = !isBot;
     }
 
 

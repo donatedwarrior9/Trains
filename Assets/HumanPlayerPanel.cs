@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HumanPlayerPannel : MonoBehaviour {
+public class HumanPlayerPanel : MonoBehaviour {
     public GameObject BotPlayerPannel;
 	// Use this for initialization
 	void Start () {
@@ -14,7 +14,7 @@ public class HumanPlayerPannel : MonoBehaviour {
 	}
     public void SetHumanPlayer(int i)
     {
-        GameManager.NumHumanPLayers = i;
+        GameManager.NumHumanPlayers = i;
         BotPlayerPannel.SetActive(true);
         gameObject.SetActive(false);
     } 
