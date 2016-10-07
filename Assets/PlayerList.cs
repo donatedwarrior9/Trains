@@ -38,7 +38,7 @@ public class PlayerList : MonoBehaviour {
                 SetupLabel(playerEntries[i], i, false);
 
             else if (i < GameManager.NumHumanPlayers + GameManager.NumAI_Players)
-                SetupLabel(playerEntries[i], i+GameManager.NumAI_Players, true);
+                SetupLabel(playerEntries[i], i, true);
 
             else
                 playerEntries[i].SetActive(false);
