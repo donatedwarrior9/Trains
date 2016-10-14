@@ -4,8 +4,10 @@ using System.Collections.Generic;
 
 public class Cards : MonoBehaviour {
 
+    // Train card draw pile
     public static Deck<ResourceCard> resourceDeck = new Deck<ResourceCard>();
 
+    // River
     public static ResourceCard[] river = new ResourceCard[5];
 
     // Always use TakeFromRiver() to take a card from the river. Don't directly reference Cards.river[someNumber].
@@ -26,6 +28,7 @@ public class Cards : MonoBehaviour {
         }
         // Take the card out of the river
         river[desiredCardIndex] = null;
+
         // Replenish the river if possible
         river[desiredCardIndex] = resourceDeck.Draw();
 
@@ -51,17 +54,19 @@ public class Cards : MonoBehaviour {
         resourceDeck.Add(ResourceCard.CreateSeveralResourceCards(12, ResourceColor.Red));
         resourceDeck.Add(ResourceCard.CreateSeveralResourceCards(12, ResourceColor.White));
         resourceDeck.Add(ResourceCard.CreateSeveralResourceCards(12, ResourceColor.Yellow));
+
         // 14 wild cards
         resourceDeck.Add(ResourceCard.CreateSeveralResourceCards(14, ResourceColor.Wild));
-        // Shuffle
+
+        // Shuffle Train cards***************
         resourceDeck.Shuffle();
         Debug.Log("Resource deck:" + resourceDeck.ToString());
 
+        // Draws River***********************
         for (int i = 0; i < river.Length; i++)
             river[i] = resourceDeck.Draw();
         Debug.Log(StringRiver());
     }
-
 }
 
 // May not end up using this class
@@ -101,6 +106,7 @@ public class RouteCard : Card
     public int city1;
     public int city2;
     public int value;
+
     // Constructor
     public RouteCard(int _city1, int _city2, int _value)
     {
@@ -147,9 +153,10 @@ public class Deck<T>
     // Removes and returns a card
     public T Draw()
     {
-        // If there are no cards, replanish the deck from the discard pile
+        // If there are no cards, replenish the deck from the discard pile
         if (IsEmpty())
             Replenish();
+
         // If it's still empty, we are out of cards
         if (IsEmpty())
         {
@@ -202,5 +209,3 @@ public class Deck<T>
         Shuffle();
     }
 }
-
-

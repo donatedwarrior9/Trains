@@ -39,7 +39,7 @@ public class AI_PlayerPanel : MonoBehaviour {
     public void SetAI_Player(int i)
     {
         GameManager.NumAI_Players = i;
-        UnityEngine.SceneManagement.SceneManager.LoadScene("main scene");
-        
+        UnityEngine.SceneManagement.SceneManager.LoadScene("difficulty select");
+        gameObject.SetActive(false);
     }
 }

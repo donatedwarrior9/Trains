@@ -7,26 +7,28 @@ public class PlayerInfo
 {
     // May hold a bool to indicate if player is human or not
     public bool isHuman = true; 
-    int cards = 0;
-    int points = 0;
-    int trainCars = 0;
+    public int traincards = 0;
+    public int routeCards = 0;
+    public int points = 0;
+    public int trainCars = 0;
     public Color playerColor = Color.white;
 }
 
 
-
-public class PlayerList : MonoBehaviour {
+public class PlayerList : MonoBehaviour
+{
 
     // Holds all Player info 
     // Populates this at start of game
     public static PlayerInfo[] playerInfos;
-    
-    public GameObject[] playerEntries;
-    
 
-   //----------------------------------------------------------------------------------------------------------------------------
-	// Assumes GameManager.NumHumanPlayers and NumAI_Players is already set
-	void Start () {
+    public GameObject[] playerEntries;
+
+
+    //----------------------------------------------------------------------------------------------------------------------------
+    // Assumes GameManager.NumHumanPlayers and NumAI_Players is already set
+    void Start()
+    {
 
         // Sets number of PlayerInfos 
         playerInfos = new PlayerInfo[GameManager.NumHumanPlayers + GameManager.NumAI_Players];
@@ -51,8 +53,8 @@ public class PlayerList : MonoBehaviour {
         // Creates new PlayerInfo struct to represent that particular player
         playerInfos[playerNumber] = new PlayerInfo();
 
-        
-        // UI Stuff
+
+        // UI Human and Bot Tiles
         label.name = label.name = (isBot) ? "Bot player" : "Human player";
         label.GetComponentInChildren<Text>().text = ((isBot) ? "Bot player " : "Human player ") + playerNumber.ToString();
         label.GetComponent<Image>().color = (playerNumber == 0) ? Color.green : (playerNumber == 1) ? Color.red : (playerNumber == 2) ? Color.blue : (playerNumber == 3) ? Color.yellow : Color.grey;
@@ -63,6 +65,4 @@ public class PlayerList : MonoBehaviour {
         playerInfos[playerNumber].playerColor = label.GetComponent<Image>().color;
         playerInfos[playerNumber].isHuman = !isBot;
     }
-
-
 }

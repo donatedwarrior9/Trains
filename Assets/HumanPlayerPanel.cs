@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class HumanPlayerPanel : MonoBehaviour {
-    public GameObject BotPlayerPannel;
+    public GameObject BotPlayerPanel;
 	// Use this for initialization
 	void Start () {
 	
@@ -12,10 +12,11 @@ public class HumanPlayerPanel : MonoBehaviour {
 	void Update () {
 	
 	}
+
     public void SetHumanPlayer(int i)
     {
         GameManager.NumHumanPlayers = i;
-        BotPlayerPannel.SetActive(true);
+        BotPlayerPanel.SetActive(true);
         gameObject.SetActive(false);
     } 
 }
