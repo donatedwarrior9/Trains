@@ -77,6 +77,10 @@ public class GameManager : MonoBehaviour {
         Cards.resourceDeck.Shuffle();                    // I believe this is handled in the card class in the start function though.
 
 
+        // Shuffle Route Cards (AKA: Destination Cards)  // Does a deck for route (destination) cards exist in the cards.cs?
+                                                         // If, so is it handled in the card class in the start function?
+
+
         // Sets the number of arrays of PlayerInfos structs
         playerInfoArray = new PlayerInfo[GameManager.NumHumanPlayers + GameManager.NumAI_Players];
 
@@ -98,22 +102,21 @@ public class GameManager : MonoBehaviour {
             // Gives players 4 train cards
             for (int j = 0; j < 4; j++)
             {
-                trainCards[j] = PlayerDeck.Draw();
+                trainCards[j] = PlayerDeck.Draw();             // We must draw from the train card pile, not sure if my implementation is correct.
             }
 
             // Gives players 3 route cards
             for (int k = 0; k < 3; k++)
             {
-                trainCards[k] = PlayerDeck.Draw();
+                routeCards[k] = PlayerDeck.Draw();             // We must draw from the route card pile, not sure if my implementation is correct.
             }
         }
 
-        // Shuffle Route Cards (AKA: Destination Cards)  // Does a deck for route (destination) cards exist in the cards.cs?
 
         // Give players their Route cards
         Cards.resourceDeck.Draw(4);
 
-        // Draw river                                    // I believe this is handled in the card class in the start function though.
+        // Draw river                                    // I believe this is handled in the card class in the start function.
     }
 
 
