@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class GameManagerInfo
 {
-    int Player;
-
     // Do not need this according to Jarret, it is all handled in the Card.cs
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -76,18 +74,17 @@ public class GameManager : MonoBehaviour {
         // Shuffle Resource Cards (AKA: Train Cards)
         Cards.resourceDeck.Shuffle();                    // I believe this is handled in the card class in the start function though.
 
-
         // Shuffle Route Cards (AKA: Destination Cards)  // Does a deck for route (destination) cards exist in the cards.cs?
-                                                         // If, so is it handled in the card class in the start function?
+                                                         // If, so is the shuffling of this deck handled in the card class in the start function?
 
 
         // Sets the number of arrays of PlayerInfos structs
         playerInfoArray = new PlayerInfo[GameManager.NumHumanPlayers + GameManager.NumAI_Players];
 
         // Sets an Array of 4 train cards
-        trainCards = new ResourceCard[4];
+        trainCards = new ResourceCard[4];                // Should we just make an array of 25 or more?
 
-        // Sets an Array of 3 route cards
+        // Sets an Array of 3 route cards                // Should we just make an array of 25 or more?
         routeCards = new ResourceCard[3];
 
 
