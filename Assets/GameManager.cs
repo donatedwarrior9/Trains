@@ -2,43 +2,46 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class GameManagerInfo
-{
-    // Do not need this according to Jarret, it is all handled in the Card.cs
-
-    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-    // Count of train cards in draw pile
-    int TrainCardsDrawPile = 0;
-
-
-    // Count of train cards disposed
-    int TrainCardsDisposePile = 0;                           // Note: 
-                                                             // The count of the train cards disposed and the train cards still in the draw pile must be "tracked"
-                                                             // so it will know when to reshuffle the train card draw pile.
-
-    // Count of destination cards disposed
-    int DestCardsDrawPile = 0;
-
-
-    // Count of trains card dispose pile
-    int TrainCardsDisposed = 0;
-    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-}
+/*
+ * This class is in charge of handling the game after it starts
+ * It handles the initial turn and every turn after that 
+ * 
+ * For every turn it accepts a decision from the player to either draw a card or place track
+ *      It will make calls to the Player_Manager after an action is selected
+ *      In the case the turn is given to an AI, it will handle calls to the AI_Manager based off certain AI conditions
+ *      If a deck of cards is empty it automatically replenish the deck before the draw is made
+ *      
+ * The cards are handled by the Cards.cs class
+ *      This includes the setup of the decks at the start of the game
+ * 
+ * The list of players is setup by the PlayerList class upon start up
+ * 
+ * Things checked at the end of the turn: 
+ *      1) If the game ending condition has been met
+ *          a) If so, start the ending process for the game
+ *          b) After every player has had their last turn, display results
+ *   
+ *      
+ */
 
 public class GameManager : MonoBehaviour {
 
-    public static int NumHumanPlayers = 2;                  // These were originally initialized to two, why? 
-    public static int NumAI_Players = 2;
+    // Variables to hold the number of players
+    // Both initialized to two for testing 
+    public static int NumHumanPlayers = 2;
+    public static Player_Manager humans = new Player_Manager();
 
+    public static int NumAI_Players = 2;
+    public static AI_Manager ai = new AI_Manager(); 
+
+
+
+    // Not entirely sure if this is actually needed. Since I do not think the game manager will be referenced in other scripts.
+    // I think the GameManager is going to be the one making calls to all the other scripts. 
+    // We should check with Jarrett / Paul. If this is not needed than neither is the awake function.
+    // - KWH
     public static GameManager instance = null;              // Static instance of GameManager which allows it to be accessed by any other script.
 
-    public static PlayerInfo[] playerInfoArray;
-
-    public static ResourceCard[] trainCards;
-
-    public static ResourceCard[] routeCards;
-
-    public static Deck<ResourceCard> PlayerDeck = new Deck<ResourceCard>();
 
     //******************************************************************************************************************************************************
     // Standard Awake function for a game manager in unity.
@@ -67,53 +70,34 @@ public class GameManager : MonoBehaviour {
     }
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
     // Use this for initialization
     void Start()
     {
 
-        // Shuffle Resource Cards (AKA: Train Cards)
-        Cards.resourceDeck.Shuffle();                    // I believe this is handled in the card class in the start function though.
-
-        // Shuffle Route Cards (AKA: Destination Cards)  // Does a deck for route (destination) cards exist in the cards.cs?
-                                                         // If, so is the shuffling of this deck handled in the card class in the start function?
-
-
-        // Sets the number of arrays of PlayerInfos structs
-        playerInfoArray = new PlayerInfo[GameManager.NumHumanPlayers + GameManager.NumAI_Players];
-
-        // Sets an Array of 4 train cards
-        trainCards = new ResourceCard[4];                // Should we just make an array of 25 or more?
-
-        // Sets an Array of 3 route cards                // Should we just make an array of 25 or more?
-        routeCards = new ResourceCard[3];
-
-
+        // Sets up the starting hands for each human and AI player
+        // Need to add code to allow it to implment for AI
+        // Means adding a way to make AI_Manager extend Player_Manager
         for (int i = 1; i < NumHumanPlayers + NumAI_Players+1; i++)
         {
-            // Sets each players count of train cards to four since that is the initial number of train cards given
-            playerInfoArray[i].traincards = 4;
 
-            // Sets each players count of route cards to three since that is the initial number of route cards given
-            playerInfoArray[i].routeCards = 3;
-
-            // Gives players 4 train cards
-            for (int j = 0; j < 4; j++)
+            if (i < NumHumanPlayers)
             {
-                trainCards[j] = PlayerDeck.Draw();             // We must draw from the train card pile, not sure if my implementation is correct.
-            }
+                // Gives players 4 train cards
+                for (int j = 0; j < 4; j++)
+                {
+                    humans.drawResource(i);
+                }
 
-            // Gives players 3 route cards
-            for (int k = 0; k < 3; k++)
-            {
-                routeCards[k] = PlayerDeck.Draw();             // We must draw from the route card pile, not sure if my implementation is correct.
+                // Gives players 3 route cards
+                for (int k = 0; k < 3; k++)
+                {
+                    humans.drawRoute(i);
+                }
             }
         }
 
 
-        // Give players their Route cards
-        Cards.resourceDeck.Draw(4);
-
-        // Draw river                                    // I believe this is handled in the card class in the start function.
     }
 
 

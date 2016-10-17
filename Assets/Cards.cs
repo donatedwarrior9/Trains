@@ -7,6 +7,9 @@ public class Cards : MonoBehaviour {
     // Train card draw pile
     public static Deck<ResourceCard> resourceDeck = new Deck<ResourceCard>();
 
+    // Route card pile
+    public static Deck<RouteCard> routeDeck = new Deck<RouteCard>(); 
+
     // River
     public static ResourceCard[] river = new ResourceCard[5];
 
@@ -66,6 +69,9 @@ public class Cards : MonoBehaviour {
         for (int i = 0; i < river.Length; i++)
             river[i] = resourceDeck.Draw();
         Debug.Log(StringRiver());
+
+        // Creates the Route Deck 
+        // Need to implement this 
     }
 }
 
@@ -99,6 +105,7 @@ public class ResourceCard : Card
         // (Red)
         return "(" + color.ToString() + ")";
     }
+
 }
 
 public class RouteCard : Card
@@ -207,5 +214,35 @@ public class Deck<T>
             discardPile.Remove(toMove);
         }
         Shuffle();
+    }
+}
+
+// Class is used to represent a players hand
+// T will either be type ResourceCard or RouteCard
+// Will be initialized for each player in PlayerList and managed there
+public class Hand<T>
+{
+    List<T> stack = new List<T>();
+
+    // Add a card to the hand
+    public void Add(T thing)
+    {
+        stack.Add(thing);
+    }
+
+    // Add a list of cards to the hand 
+    public void Add(List<T> things)
+    {
+        foreach (T thing in things)
+            stack.Add(thing);
+    }
+
+    // Will remove the card from the players hand
+    // Will need to also add this to the card discarded pile
+    //      Do not need to check type here as only resource cards will ever be "removed" from a players hand
+    public void RemoveCard(T toRemove)
+    {
+        // Need to implement Removal of Cards
+        
     }
 }
